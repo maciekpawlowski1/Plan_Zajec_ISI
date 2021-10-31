@@ -94,6 +94,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
         for(WeekModel w:downloadedWeeks)
         {
+            if(!w.isDownloaded())
+                continue;
             downloadedDays.add(w.getMonday());
             downloadedDays.add(w.getFriday());
             Calendar c = Calendar.getInstance();
