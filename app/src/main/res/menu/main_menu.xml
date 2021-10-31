@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/add_lesson_button_menu"
+        android:icon="@drawable/add_icon"
+        android:title="Add"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/calendar_menu"
+        android:icon="@drawable/calendar_icon"
+        android:title="Calendar"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/today_button_menu"
+        android:title="Dziś"
+        app:showAsAction="always" />
+    <group
+        android:id="@+id/groups_group_main_menu"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/all_groups_menu"
+            android:title="Wszystkie" />
+        <item
+            android:id="@+id/g1_menu"
+            android:title="Grupa 1" />
+        <item
+            android:id="@+id/g2_menu"
+            android:title="Grupa 2" />
+        <item
+            android:id="@+id/g3_menu"
+            android:title="Grupa 3" />
+        <item
+            android:id="@+id/g4_menu"
+            android:title="Grupa 4" />
+        <item
+            android:id="@+id/g5_menu"
+            android:title="Grupa 5" />
+        <item
+            android:id="@+id/g6_menu"
+            android:title="Grupa 6" />
+        <item
+            android:id="@+id/g7_menu"
+            android:title="Grupa 7" />
+    </group>
+</menu>
