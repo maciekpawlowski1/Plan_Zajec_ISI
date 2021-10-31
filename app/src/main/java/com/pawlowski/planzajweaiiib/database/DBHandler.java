@@ -80,12 +80,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return savedLessons;
     }
 
-    public void deleteSavedLessons()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM SavedLessons");
-        db.close();
-    }
+
 
     public void deleteSavedLessonsWhichAreDownloaded(List<WeekModel> downloadedWeeks)
     {
@@ -154,6 +149,67 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
     }
+
+
+    public void replaceWeekWithNewLessons(String monday, String friday, List<LessonModel> lessons)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<String> downloadedDays = new ArrayList<>();
+
+        downloadedDays.add(monday);
+        downloadedDays.add(friday);
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(sdf.parse(monday));
+            for(int i=1;i<4;i++)
+            {
+                c.add(Calendar.DATE, 1);
+                downloadedDays.add(sdf.format(c.getTime()));
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<SavedLessonModel> saved = getSavedLessons();
+        for(SavedLessonModel l:saved)
+        {
+            boolean d = false;
+            for(String s:downloadedDays)
+            {
+                if(l.getDay().equals(s))
+                {
+                    d = true;
+                    break;
+                }
+
+            }
+            if(d)
+            {
+                Log.d("delete", l.getDay());
+                db.execSQL("DELETE FROM SavedLessons WHERE SavedLessons.id = " + l.getId());
+            }
+        }
+
+        for(LessonModel l:lessons)
+        {
+            ContentValues values = new ContentValues();
+            values.put("tittle", l.getTittle());
+            values.put("teacher", l.getTeacher());
+            values.put("room", l.getRoom());
+            values.put("time", l.getTime());
+            values.put("full_info", l.getFullInfo());
+            values.put("gr", l.getGroup());
+            values.put("date", l.getDay());
+            db.insert("SavedLessons", null, values);
+            Log.d("insert", l.getDay());
+
+        }
+
+
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {

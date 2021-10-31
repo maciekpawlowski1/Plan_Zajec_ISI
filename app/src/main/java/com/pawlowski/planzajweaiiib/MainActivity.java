@@ -190,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                         setWeekAsDownloaded(index);
                         addLessons(parsedLessons);
                         adapter.refreshFragment(tabLayout.getSelectedTabPosition());
+                        DBHandler.getInstance(getApplicationContext()).replaceWeekWithNewLessons(downloadedWeeks.get(index).getMonday(), downloadedWeeks.get(index).getFriday(), parsedLessons);
 
                     }
 
@@ -251,6 +252,8 @@ public class MainActivity extends AppCompatActivity {
                                                 w.setDownloaded(true);
                                                 addLessons(parsedLessons);
                                                 adapter.refreshFragment(tabLayout.getSelectedTabPosition());
+                                                DBHandler.getInstance(getApplicationContext()).replaceWeekWithNewLessons(w.getMonday(), w.getFriday(), parsedLessons);
+
                                             }
 
                                             if(refreshLayout.isRefreshing())
@@ -300,11 +303,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        if(lessons.size() > 0)
+        /*if(lessons.size() > 0)
         {
             DBHandler.getInstance(getApplicationContext()).deleteSavedLessonsWhichAreDownloaded(downloadedWeeks);
             DBHandler.getInstance(getApplicationContext()).insertSavedLessons(lessons);
-        }
+        }*/
         super.onStop();
 
 
@@ -398,6 +401,8 @@ public class MainActivity extends AppCompatActivity {
                             setWeekAsDownloaded(index);
                             addLessons(parsedLessons);
                             adapter.refreshFragment(tabLayout.getSelectedTabPosition());
+                            DBHandler.getInstance(getApplicationContext()).replaceWeekWithNewLessons(mondayDate, fridayDate, parsedLessons);
+
                         }
 
                     }
